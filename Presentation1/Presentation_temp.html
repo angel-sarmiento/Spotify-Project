@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Clustering of Spotify Data for Inference</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Angel Sarmiento" />
+    <link href="libs/remark-css/rladies.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Clustering of Spotify Data for Inference
+## <html>
+<div style="float:left">
+
+</div>
+<hr color='#53316B' size=1px width=796px>
+</html>
+### Angel Sarmiento
+### Scientific Computation and Programming
+
+---
+
+
+
+
+
+layout: false
+background-image: url(https://mk0floridapolyrvphbf.kinstacdn.com/wp-content/themes/floridapolytechnic/images/logo.svg)
+background-position: 95% 0%
+background-size: 10%
+
+
+
+
+# Table of contents
+
+
+[Summary of Project](#ep1)
+
+[The Spotify Dataset](#ep2)
+
+[What is Hierarcichal Clustering?](#ep3)
+
+
+---
+class: inverse, center, middle
+name: ep1
+
+# Summary
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+
+---
+# Summary
+
+This project is going to be developed using the Spotify API. More specifically, the R wrapper for the spotify API. The main curiousity is the analysis of the dataset to find out the answers to some questions. Namely,
+
+- What relationships are there between different genres/styles of music?  
+- What kinds of emotions are displayed in music and how does that change over time?  
+- Which regions in the world listen to which genres and emotional qualities of music, and can that be related with seasonality at all?  
+- How has music composition change over time? 
+---
+
+class: inverse, center, middle
+name: ep2
+
+# The Spotify Dataset
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+---
+#The Spotify Dataset (cont.)
+The Spotify dataset is access via an R wrapper for the spotify API. This R wrapper is called [spotifyr](https://cran.r-project.org/web/packages/spotifyr/spotifyr.pdf) and it includes the ability to pull from a user's account a variety of information about songs, albums, artists, and playlists. This is necessary because Spotify uses very specific measures to categorize songs. These categorization include but are not limited to:
+
+- **Instrumentalness** The amount of instrumentation is in a song (versus lyrics, electronics, etc.)
+- **Valence** A measure of how positive or negative a song is
+- **Key** The key center of a song 
+- **Tempo** The tempo of a song
+- **Other emotional measures** a more complex set of variables showing different moods (other than positive/negative).
+
+---
+class: inverse, center, middle
+name: ep3
+
+# What is Hierarchical Clustering
+
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+
+---
+
+#Hierarchical Clustering
+
+Clustering is a form of machine learning in which inferences can be made about data by combining and assigning them to clustering. This is **Unsupervised Learning**, a technique for use cases in which the dataset is not labelled and classification cannot be done. 
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="image2.png" alt="Clustering of the 'IRIS' Dataset" width="70%" /&gt;
+&lt;p class="caption"&gt;Clustering of the 'IRIS' Dataset&lt;/p&gt;
+&lt;/div&gt;
+
+---
+#Hierarchical Clustering (cont.)
+
+Hierarchical Clustering is similar in that the data is assembled into areas of similarity ("clusters") but instead of them generally being clustered a "hierarchy" is established. This starts with two clusters where the two closest members are the furthest from each other, combining them until one large cluster remains. 
+
+Here is the formula that repeats until one cluster remains:
+`$$d(G_i,G_j) =  \max_{X^r \epsilon G_i, X^s \epsilon G_j} d(X^T,X^x)$$`
+Where:
+- `\(d( x, y)\)` is the distance according to some metric
+- `\(G_i\)` is a cluster
+- `\(X_i\)` is an instance i
+
+---
+#Hierarchical Clustering (cont.)
+The objective is to produce clusters like the ones below and establish a better comparative basis for different genres of music. This is the top 25 most "negative" songs by the artist Kanye West clustered.
+&lt;div class="figure" style="text-align: center"&gt;
+&lt;img src="image.png" alt="The Most Negative Kanye Tracks, Clustered" width="80%" /&gt;
+&lt;p class="caption"&gt;The Most Negative Kanye Tracks, Clustered&lt;/p&gt;
+&lt;/div&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

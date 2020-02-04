@@ -1,0 +1,111 @@
+---
+title: "Spotify"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(spotifyr)
+
+
+Sys.setenv(SPOTIFY_CLIENT_ID = '42131626e81e4eaa99bcb59b9ec25ced')
+Sys.setenv(SPOTIFY_CLIENT_SECRET = 'c4413145290a4e74b657e6691eb7ea3b')
+
+access_token <- get_spotify_authorization_code()
+```
+# loading libraries
+```{r setup, include=FALSE}
+library(tidyverse)
+library(knitr)
+library(rpart)
+library(dendextend)
+library(circlize)
+
+# library(highcharter)
+# library(scales)
+```
+
+```{r}
+kanye <- get_artist_audio_features('Kanye West')
+```
+
+
+```{r}
+#Some of the features are not conducive to clustering and might skew the model. 
+useless_features <- c("album_release_year", "disc_number", "track_number", "time_signature")
+
+
+# Here is code to select the numerical variables in the data, bind the columns with names together, filter out skits,
+# and other irregular song titles, finding the mean of the numerical values. 
+kanye <- kanye %>% select_if(is.numeric) %>%
+  select(-one_of(useless_features)) %>% 
+  bind_cols(kanye %>% select(track_name)) %>% 
+  filter(!grepl('Skit', track_name)) %>% 
+  filter(!grepl('Album Version', track_name)) %>% 
+  filter(!grepl('Live At Abbey Road Studios', track_name)) %>% 
+  group_by(track_name) %>% 
+  summarise_if(is.numeric, mean, na.rm = TRUE) %>% 
+  # After this, the track names are selected by the top 25 "saddest" songs (using the spotify data's Valence measure).
+  ungroup() %>% 
+  top_n(25, -valence) %>% 
+  column_to_rownames("track_name") %>% 
+  as.data.frame()
+
+
+```
+
+
+```{r}
+#creating the dendrogram
+top_dend <- as.dendrogram(hclust(dist(kanye))) %>% 
+  color_branches(k = 8) %>% 
+  color_labels(k = 8)
+```
+
+```{r}
+circlize_dendrogram(top_dend, labels_track_height = 0.3, dend_track_height = 0.3)
+```
+
+
+
+```{r}
+# library(lubridate)
+# 
+# get_my_top_artists_or_tracks(type = 'artists', time_range = 'long_term', limit = 5) %>% 
+#     select(name, genres) %>% 
+#     rowwise %>% 
+#     mutate(genres = paste(genres, collapse = ', ')) %>% 
+#     ungroup %>% 
+#     kable()
+```
+
+
+
+
+#What is Kanye's most use keys for songs?
+```{r}
+# kanye %>% 
+#   count(key_mode, sort= TRUE) %>% 
+#   head(5) %>% 
+#   kable()
+```
+
+
+Now its time to move forward with cross-country comparisons
+```{r}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,43 @@
+---
+title: "Clustering of Spotify data to Infer Relationships of Genres and Show US Trends Over Time"
+author: "Angel Sarmiento"
+subtitle: Florida Polytechnic University
+output:
+  pdf_document: default
+  html_notebook: default
+url_color: blue
+---
+
+```{r, include = FALSE}
+library(tinytex)
+```
+
+
+## Summary
+
+Spotify is a music streaming service that provides millions of people with virtually unlimited amounts of music spanning across multiple genres and time periods. All a person has to do to access this expansive catalogue is to sign up and start listening. Lots of data and metadata characterize music and a variety of very useful statistical information can be derived from such a large database of information. The objective of this project is to leverage this data to answer some questions about the patterns of music trends and to generate a model that can sufficiently infer the relationships of genres, artists, and albums.  
+\
+Another function of this work would be to create a spectrum of "feelings" for some individual songs that will show the emotional qualities of them and then to assign them to specific regions where those songs are available. A different, more mechanical way of showing this would be to analyze how the composition of music has changed over time by utilizing the *key centers* of songs, tempo, number of keys, and *instrumentalness*. *Keys* being the specific group of notes that establish the tonality of a song and *instrumentalness* being how instrument heavy the composition of a song is.  
+
+
+The existing questions posed can be listed as:
+\begin{itemize}
+\item What relationships are there between different genres/styles of music?  
+\item What kinds of emotions are displayed in music and how does that change over time?  
+\item Which regions in the world listen to which genres and emotional qualities of music, and can that be related with seasonality at all?  
+\item How has music composition change over time? 
+\end{itemize}
+
+## Resources
+
+The primary resource for this project is the ['spotifyr'] package, an wrapper for the Spotify web API which can be found with the following R commands
+```{r, eval = FALSE}
+install.packages("spotifyr")
+library("spotifyr")
+```
+Other resources include 
+\begin{itemize}
+\item \href{http://paulelvers.com/post/emotionsineuropeanmusic/}{{\color{blue}{\underline{Sentiment analysis of musical taste: a cross-European comparison
+}}}}
+\item A paper titled \href{https://www.math.vu.nl/~sbhulai/papers/paper-vandenhoven.pdf}{{\color{blue}{\underline{Analyzing Spotify Data}}}} written by Jeroen van den Hoven from VU University.
+\end{itemize}
