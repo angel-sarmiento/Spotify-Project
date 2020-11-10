@@ -10,13 +10,7 @@ knitr::opts_chunk$set(echo = FALSE, comment = NA, message = FALSE, warning = FAL
 ```
 
 ```{r Spotify Setup, include=FALSE}
-library(spotifyr)
-
-
-Sys.setenv(SPOTIFY_CLIENT_ID = 'f9afa83524e0430da85d4f55c15b21a1')
-Sys.setenv(SPOTIFY_CLIENT_SECRET = '5a7c8acf482b4ad0888f7425a90add4d')
-
-access_token <- get_spotify_authorization_code()
+source("../API_KEY/spotify_authentication.R")
 ```
 
 # loading libraries
