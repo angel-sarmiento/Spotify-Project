@@ -120,12 +120,15 @@ albums <- albums.artists %>% select(c("album.name", "popularity", "release_date"
 
 ```
 
+
+
+
 ```{r Creating the pre-final dataframe}
 # Inner join and removal of duplicates for final dataset
-
 full_dataset <- inner_join(full_df, albums, by = c("artist.name", "track.name"))
-
 ```
+
+
 
 ```{r Attempting to get Genre Tags for dataset}
 # tags <- map_df(as.vector(full_dataset$artist.name), get_tags); beepr::beep("coin")
@@ -135,14 +138,29 @@ tags <- read_csv("tags.csv")
 ```
 
 
+
+
 ```{r}
+#Getting appropriate tags
 tags <- tags %>% 
   filter(tag_freq == 100)
 
+#renaming the artist name column for a join
 colnames(tags)[1] <- "artist.name"
 
+#joining the tags dataframe with the full data
 full_dataset <- left_join(full_dataset, tags, by = "artist.name")
 full_dataset <- full_dataset[!duplicated(full_dataset["track.name"]),]
+
+#Lets unnest the countries and rename the resulting column
+final_dataset <- full_dataset %>% 
+  mutate(available_markets = map(available_markets, as_tibble)) %>% 
+  unnest(cols = c(available_markets)) %>% 
+  rename(country = value) %>% 
+  select(-c(genres))
+
+#writing this data to a csv for later use
+write_csv(final_dataset, "spotify_full_100_10s.csv")
 ```
 
 # Which genres have the most joyful music
